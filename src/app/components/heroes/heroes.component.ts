@@ -15,10 +15,12 @@ export class HeroesComponent implements OnInit {
               ) { }
 
   heroes: Heroe[] = [];
+  criteria: string = '';
 
   ngOnInit() {
     this._activateRoute.params.subscribe((params) => {
       if (params.criteria) {
+        this.criteria = params.criteria;
         this.heroes = this._heroesService.searchHeroes(params.criteria);
       } else {
         this.heroes = this._heroesService.getHerores();
