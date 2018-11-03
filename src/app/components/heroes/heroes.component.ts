@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Heroe, HeroesService} from '../../services/heroes.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-heroes',
@@ -10,13 +10,20 @@ import {Router} from '@angular/router';
 export class HeroesComponent implements OnInit {
 
   constructor(private _heroesService: HeroesService,
-              private _router: Router
+              private _router: Router,
+              private _activateRoute: ActivatedRoute
               ) { }
 
   heroes: Heroe[] = [];
 
   ngOnInit() {
-    this.heroes = this._heroesService.getHerores();
+    this._activateRoute.params.subscribe((params) => {
+      if (params.criteria) {
+        this.heroes = this._heroesService.searchHeroes(params.criteria);
+      } else {
+        this.heroes = this._heroesService.getHerores();
+      }
+    });
   }
 
   seeMore(idx) {

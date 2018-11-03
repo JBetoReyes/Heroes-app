@@ -68,6 +68,12 @@ export class HeroesService {
   getHeroe(idx): Heroe {
     return this.heroes[idx];
   }
+
+  searchHeroes(criteria): Heroe[] {
+    return this.heroes.filter((heroe) => {
+      return heroe.nombre.toLowerCase().includes(criteria.toLowerCase());
+    });
+  }
 }
 
 export interface Heroe {
